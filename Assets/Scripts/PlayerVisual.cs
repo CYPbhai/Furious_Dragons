@@ -16,6 +16,8 @@ public class PlayerVisual : MonoBehaviour
         player.OnClawAttack += () => animator.SetTrigger("ClawAttack");
         player.OnFlameAttack += () => animator.SetTrigger("FlameAttack");
         player.OnFlyingFlameAttack += () => animator.SetTrigger("FlyingFlameAttack");
+        player.OnGetHit += () => animator.SetTrigger("GetHit");
+        player.OnDeath += () => animator.SetTrigger("Die");
     }
 
     public void OnAttackFinished()

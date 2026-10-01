@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.Playables;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float rotateSpeed = 720f;
@@ -12,12 +13,14 @@ public class Player : MonoBehaviour
     public event Action OnClawAttack;
     public event Action OnFlameAttack;
     public event Action OnFlyingFlameAttack;
+    public event Action OnGetHit;
+    public event Action OnDeath;
 
     private PlayerInputProvider input;
     private Rigidbody rb;
-    private bool isMoving = false;
-
-    public bool IsAttacking { get; private set; }
+    public State state { get; private set; } = State.Idle;
+    [SerializeField] private float basicCooldown = 1f, clawCooldown = 2f, flameCooldown = 3f, flyCooldown = 5f;
+    private float basicReadyAt, clawReadyAt, flameReadyAt, flyReadyAt;
 
     private void Awake()
     {
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (state == State.Dead) return;
         Vector2 move = input.MovementInput;
         Vector3 moveDir = new Vector3(move.x, 0f, move.y);
 
@@ -35,58 +39,91 @@ public class Player : MonoBehaviour
         bool wantsAttack3 = input.IsAttacking3;
         bool wantsAttack4 = input.IsAttacking4;
 
-        if (!IsAttacking)
+        bool canAct = state == State.Idle || state == State.Moving;
+
+        if (canAct)
         {
-            if (wantsAttack1) 
+            if (wantsAttack1 && Time.time >= basicReadyAt) 
             { 
-                StartAttack(); 
+                StartAttack(State.Attacking); 
+                basicReadyAt = Time.time + basicCooldown; 
                 OnBasicAttack?.Invoke(); 
             }
-            else if (wantsAttack2) 
+            else if (wantsAttack2 && Time.time >= clawReadyAt) 
             { 
-                StartAttack(); 
+                StartAttack(State.Attacking); 
+                clawReadyAt = Time.time + clawCooldown; 
                 OnClawAttack?.Invoke(); 
             }
-            else if (wantsAttack3) 
+            else if (wantsAttack3 && Time.time >= flameReadyAt) 
             { 
-                StartAttack(); 
+                StartAttack(State.Attacking); 
+                flameReadyAt = Time.time + flameCooldown; 
                 OnFlameAttack?.Invoke(); 
             }
-            else if (wantsAttack4) 
+            else if (wantsAttack4 && Time.time >= flyReadyAt) 
             { 
-                StartAttack(); 
+                StartAttack(State.Attacking); 
+                flyReadyAt = Time.time + flyCooldown; 
                 OnFlyingFlameAttack?.Invoke(); 
             }
         }
 
-        bool nowMoving = !IsAttacking && moveDir.sqrMagnitude > 0.001f;
+        bool wantsToMove = moveDir.sqrMagnitude > 0.001f;
 
-        if (nowMoving != isMoving)
+        if (state == State.Idle || state == State.Moving)
         {
-            isMoving = nowMoving;
-            if (isMoving) OnMove?.Invoke();
-            else OnIdle?.Invoke();
+            State target = wantsToMove ? State.Moving : State.Idle;
+            if (target != state)
+            {
+                state = target;
+                if (target == State.Moving)
+                {
+                    OnMove?.Invoke();
+                }
+                else
+                {
+                    OnIdle?.Invoke();
+                }
+            }
         }
 
-        if (isMoving)
+        if (state == State.Moving)
         {
             moveDir.Normalize();
             rb.MovePosition(rb.position + moveDir * moveSpeed * Time.fixedDeltaTime);
-
             Quaternion targetRot = Quaternion.LookRotation(moveDir, Vector3.up);
             rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, targetRot, rotateSpeed * Time.fixedDeltaTime));
         }
     }
 
-    private void StartAttack()
+    private void StartAttack(State s)
     {
-        IsAttacking = true;
+        state = s;
     }
-
     public void OnAttackFinished()
     {
-        IsAttacking = false;
+        if (state != State.Dead) state = State.Idle;
+    }
+    
+    public void ReceiveHit()
+    {
+        if (state == State.Dead) return;
+        state = State.Hit;
+        OnGetHit?.Invoke();
     }
 
-    public bool IsMoving() => isMoving;
+    public void OnHitRecoveryFinished()
+    {
+        if (state != State.Dead)
+        {
+            state = State.Idle;
+        }
+    }
+
+    public void Die()
+    {
+        state = State.Dead;
+        OnDeath?.Invoke();
+    }
 }
