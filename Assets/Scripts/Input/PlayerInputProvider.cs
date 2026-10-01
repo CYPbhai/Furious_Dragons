@@ -7,4 +7,5 @@ public class PlayerInputProvider : MonoBehaviour, IInputProvider
     public bool IsAttacking2 => GameInput.Instance.GetIsAttacking2();
     public bool IsAttacking3 => GameInput.Instance.GetIsAttacking3();
     public bool IsAttacking4 => GameInput.Instance.GetIsAttacking4();
+
 }

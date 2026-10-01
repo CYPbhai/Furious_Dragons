@@ -36,6 +36,11 @@ public class DragonController : MonoBehaviour, IDragon
     public bool IsFlameReady => Time.time >= flameReadyAt;
     public bool IsFlyReady => Time.time >= flyReadyAt;
 
+    public float BasicProgress => basicCooldown <= 0f ? 1f : Mathf.Clamp01(1f - ((basicReadyAt - Time.time) / basicCooldown));
+    public float ClawProgress => clawCooldown <= 0f ? 1f : Mathf.Clamp01(1f - ((clawReadyAt - Time.time) / clawCooldown));
+    public float FlameProgress => flameCooldown <= 0f ? 1f : Mathf.Clamp01(1f - ((flameReadyAt - Time.time) / flameCooldown));
+    public float FlyProgress => flyCooldown <= 0f ? 1f : Mathf.Clamp01(1f - ((flyReadyAt - Time.time) / flyCooldown));
+
     private void Awake()
     {
         input = GetComponent<IInputProvider>();
@@ -45,6 +50,10 @@ public class DragonController : MonoBehaviour, IDragon
     private void OnEnable()
     {
         GetComponent<Health>().OnDeath += DragonController_OnDeath;
+        basicReadyAt = Time.time + basicCooldown;
+        clawReadyAt = Time.time + clawCooldown;
+        flameReadyAt = Time.time + flameCooldown;
+        flyReadyAt = Time.time + flyCooldown;
     }
     private void OnDisable()
     {

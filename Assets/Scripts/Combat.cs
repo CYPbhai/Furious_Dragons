@@ -8,10 +8,10 @@ public class Combat : MonoBehaviour
 
     [SerializeField] private float basicRange = 4f, basicDamage = 5f;
     [SerializeField] private float clawRange = 6f, clawDamage = 8f;
-    [SerializeField] private float flameRadius = 10f, flameDamage = 15f;
-    [SerializeField] private float flyRadius = 15f, flyDamage = 25f;
+    [SerializeField] private float flameRadius = 10f, flameDamage = 16f;
+    [SerializeField] private float flyRadius = 15f, flyDamage = 28f;
 
-    [SerializeField] private float flameTickInterval = 0.15f;
+    [SerializeField] private float flameTickInterval = 0.25f;
     [SerializeField] private float flameConeAngle = 30f;
 
     private Coroutine flameRoutine;

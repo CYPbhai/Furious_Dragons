@@ -5,7 +5,7 @@ public class Health : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 100;
     private float currentHealth;
-
+    public event Action<float> OnHit;
     private float CurrentHealth 
     { 
         get
@@ -31,7 +31,7 @@ public class Health : MonoBehaviour
     public void TakeDamage(float amount)
     {
         if (CurrentHealth <= 0) return;
-
+        OnHit?.Invoke(amount);
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
 
         if(CurrentHealth <=0)
