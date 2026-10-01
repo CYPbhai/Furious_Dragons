@@ -40,7 +40,7 @@ public class Health : MonoBehaviour
         }
         else
         {
-            GetComponent<IDamageable>()?.ReceiveHit();
+            GetComponent<IDragon>()?.ReceiveHit();
         }
     }
 
