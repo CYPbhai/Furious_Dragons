@@ -37,10 +37,26 @@ public class Player : MonoBehaviour
 
         if (!IsAttacking)
         {
-            if (wantsAttack1) { StartAttack(); OnBasicAttack?.Invoke(); }
-            else if (wantsAttack2) { StartAttack(); OnClawAttack?.Invoke(); }
-            else if (wantsAttack3) { StartAttack(); OnFlameAttack?.Invoke(); }
-            else if (wantsAttack4) { StartAttack(); OnFlyingFlameAttack?.Invoke(); }
+            if (wantsAttack1) 
+            { 
+                StartAttack(); 
+                OnBasicAttack?.Invoke(); 
+            }
+            else if (wantsAttack2) 
+            { 
+                StartAttack(); 
+                OnClawAttack?.Invoke(); 
+            }
+            else if (wantsAttack3) 
+            { 
+                StartAttack(); 
+                OnFlameAttack?.Invoke(); 
+            }
+            else if (wantsAttack4) 
+            { 
+                StartAttack(); 
+                OnFlyingFlameAttack?.Invoke(); 
+            }
         }
 
         bool nowMoving = !IsAttacking && moveDir.sqrMagnitude > 0.001f;
