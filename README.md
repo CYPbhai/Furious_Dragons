@@ -1,7 +1,7 @@
 # Furious Dragons
 
 ## Unity Version 
-#### 6000.6.0f1
+- 6000.6.0f1
 
 ## How to Play
 
