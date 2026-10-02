@@ -99,11 +99,6 @@ public class DragonController : MonoBehaviour, IDragon
         Vector2 move = input.MovementInput;
         Vector3 moveDir = new Vector3(move.x, 0f, move.y);
 
-        if (lookTarget != null && targetDragon == null)
-        {
-            UpdateTargetReference();
-        }
-
         bool targetIsAttacking = targetDragon != null && targetDragon.state == State.Attacking;
 
         if ((state == State.Idle || state == State.Moving) && !targetIsAttacking)

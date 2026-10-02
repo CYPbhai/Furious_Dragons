@@ -2455,10 +2455,10 @@ MonoBehaviour:
   flameRange: 20
   flyRange: 22
   preferredRange: 14
-  attackSpeedFactor: 0.6
+  strafeSpeedFactor: 0.6
   attackChangeInterval: 1.5
   arenaCenter: {x: 0, y: 0, z: 0}
-  arenaRadius: 18
+  arenaRadius: 34
   edgeMargin: 3
   decisionInterval: 0.3
   attackChancePerDecision: 0.65

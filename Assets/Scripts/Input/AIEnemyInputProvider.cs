@@ -13,11 +13,8 @@ public class AIEnemyInputProvider : MonoBehaviour, IInputProvider
 
     [Header("Movement")]
     [SerializeField] private float preferredRange = 7f;
-    [SerializeField] private float attackSpeedFactor = 0.6f;
-    [SerializeField] private float attackChangeInterval = 1.5f;
-    [SerializeField] private Vector3 arenaCenter = Vector3.zero;
-    [SerializeField] private float arenaRadius = 18f;
-    [SerializeField] private float edgeMargin = 3f;
+    [SerializeField] private float strafeSpeedFactor = 0.6f;
+    [SerializeField] private float strafeChangeInterval = 1.5f;
 
     [Header("Decision Timing")]
     [SerializeField] private float decisionInterval = 0.3f;
@@ -27,7 +24,7 @@ public class AIEnemyInputProvider : MonoBehaviour, IInputProvider
     private bool attack1Queued, attack2Queued, attack3Queued, attack4Queued;
 
     private float nextDecisionTime;
-    private float nextAttackTime;
+    private float nextStrafeTime;
     private int strafeDir = 1;
 
     private DragonController dragon;
@@ -73,11 +70,6 @@ public class AIEnemyInputProvider : MonoBehaviour, IInputProvider
             return;
         }
 
-        if (targetDragon == null && target != null)
-        {
-            targetDragon = target.GetComponent<DragonController>();
-        }
-
         UpdateMovement();
 
         if (Time.time >= nextDecisionTime)
@@ -94,40 +86,42 @@ public class AIEnemyInputProvider : MonoBehaviour, IInputProvider
         float dist = toTarget.magnitude;
         
         //Debug.Log(dist);
-        
-        if (dist <= basicRange)
-        {
-            movementInput = Vector2.zero;
-            return;
-        }
 
         Vector3 dirToTarget = dist > 0.001f ? toTarget / dist : Vector3.forward;
 
         Vector3 approachComponent;
-        if (dist > preferredRange + 1f) approachComponent = dirToTarget;
-        else if (dist < preferredRange - 1f) approachComponent = -dirToTarget;
-        else approachComponent = Vector3.zero;
-
-        if (Time.time >= nextAttackTime)
+        if (dist > preferredRange + 1f)
         {
-            nextAttackTime = Time.time + attackChangeInterval;
+            approachComponent = dirToTarget;
+        }
+        else if (dist < preferredRange - 1f)
+        {
+            approachComponent = -dirToTarget;
+        }
+        else
+        {
+            approachComponent = Vector3.zero;
+        }
+        if (Time.time >= nextStrafeTime)
+        {
+            nextStrafeTime = Time.time + strafeChangeInterval;
             strafeDir = Random.value > 0.5f ? 1 : -1;
         }
         Vector3 perpendicular = Vector3.Cross(Vector3.up, dirToTarget);
-        Vector3 strafeComponent = perpendicular * strafeDir * attackSpeedFactor;
+        Vector3 strafeComponent = perpendicular * strafeDir * strafeSpeedFactor;
+
+
+        if (dist <= basicRange)
+        {
+            approachComponent = Vector3.zero;
+        }
 
         Vector3 desired = approachComponent + strafeComponent;
 
-        Vector3 posFlat = transform.position;
-        posFlat.y = arenaCenter.y;
-        float distFromCenter = Vector3.Distance(posFlat, arenaCenter);
-        if (distFromCenter > arenaRadius - edgeMargin)
+        if (desired.sqrMagnitude > 1f)
         {
-            Vector3 towardCenter = (arenaCenter - posFlat).normalized;
-            desired = Vector3.Lerp(desired.normalized, towardCenter, 0.7f);
+            desired.Normalize();
         }
-
-        if (desired.sqrMagnitude > 1f) desired.Normalize();
         movementInput = new Vector2(desired.x, desired.z);
     }
 
@@ -154,8 +148,14 @@ public class AIEnemyInputProvider : MonoBehaviour, IInputProvider
                 if (Random.value > 0.5f) attack1Queued = true;
                 else attack2Queued = true;
             }
-            else if (basicReady) attack1Queued = true;
-            else if (clawReady) attack2Queued = true;
+            else if (basicReady)
+            {
+                attack1Queued = true;
+            }
+            else if (clawReady)
+            {
+                attack2Queued = true;
+            }
         }
         else if (dist <= clawRange && dragon.IsClawReady)
         {
