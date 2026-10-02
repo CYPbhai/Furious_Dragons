@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62a1484c05376a442992e75e6ff02f9d, type: 3}
+  m_Name: DragonSoundsSO
+  m_EditorClassIdentifier: Assembly-CSharp::DragonSoundsSO
+  basicAttack: {fileID: 8300000, guid: 82c1a2226b941764cbefc63306f2dca5, type: 3}
+  clawAttack: {fileID: 8300000, guid: f21ca14ce1e4c6c41b34e04635e5d1db, type: 3}
+  flameAttack: {fileID: 8300000, guid: 9dfe51d37e1a4634ebe8545814164038, type: 3}
+  flyFlameAttack: {fileID: 8300000, guid: f0a61c487eb48344c90a0b54908a419d, type: 3}
+  roar: {fileID: 8300000, guid: 75b033ab50a8b274ea60f953a596cfe5, type: 3}
+  growl: {fileID: 8300000, guid: d5db45a649989cb4180e791cd0943b20, type: 3}
+  hurt: {fileID: 8300000, guid: 6768da8a7d6eab544988a241d38b27cd, type: 3}
+  fly: {fileID: 8300000, guid: 811b5f74c0451554bbad0a58599487b7, type: 3}
+  land: {fileID: 8300000, guid: daa76427c5ba6494580248a6a0dc3b76, type: 3}
+  die: {fileID: 8300000, guid: 65bdefc39be015b4ca5cbac30885e26b, type: 3}
