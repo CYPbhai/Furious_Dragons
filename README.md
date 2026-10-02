@@ -1,7 +1,11 @@
 # Furious Dragons
 
-## Unity Version 
-- 6000.6.0f1
+## Tools used 
+- Unity 6000.6.0f1
+- Krita
+- Audacity
+- Claude
+- Gemini
 
 ## How to Play
 
@@ -19,6 +23,7 @@ Abilities can also be triggered via the on-screen ability buttons, which show a 
 - WASD movement using Rigidbody-based physics (`MovePosition`/`MoveRotation`), with the dragon always facing its opponent independent of movement direction.
 - Full combat system: 4 distinct abilities (bite, claw, flame breath, and fly flame attack), each on an independent cooldown.
 - On Screen buttons with unique icon for each button.
+- Flame breath VFX created using VFX Graph in Unity with custom textures created in Krita.
 - Flame breath deals continuous tick damage for as long as the target stays in range, rather than one instant hit - meant to feel like an actual sustained breath rather than a single "hitscan" attack.
 - Enemy AI with a timed decision loop (re-evaluates roughly every 0.3s rather than every frame): maintains a preferred distance from the player, strafes unpredictably, retreats when too close, and picks between abilities based on range — with a deliberate chance to *not* attack even when able to, so it doesn't read as a robotic 100%-uptime attacker.
 - Shared architecture: the player and the AI dragon both run on the same `DragonController` component, differing only in which `IInputProvider` feeds them input (`PlayerInputProvider` reading the keyboard/UI, `AIEnemyInputProvider` computing decisions). This means the AI automatically respects the exact same cooldowns, state rules, and attack-locking logic as the player - there's no separate AI combat script that could drift out of sync.
