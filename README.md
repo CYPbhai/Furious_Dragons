@@ -38,7 +38,7 @@ Abilities can also be triggered via the on-screen ability buttons, which show a 
 - Dragon models & animations: [Dragon for Boss Monster : PBR by Dungeon Mason](https://assetstore.unity.com/packages/3d/characters/creatures/dragon-for-boss-monster-pbr-78923)
 - Arena: [Low Poly Gladiators Arena by Leonardo Olivieri Carvalho](https://assetstore.unity.com/packages/3d/environments/fantasy/low-poly-gladiators-arena-167116)
 - Dragon Sounds: [Dragon Sounds by DRAGON-STUDIO](https://pixabay.com/users/dragon-studio-38165424/)
-- Dragon Hurt Sound: [Dragon Hurt](https://pixabay.com/sound-effects/horror-dragon-hurt-47161/)
+- Dragon Hurt Sound: [Dragon Hurt SFX](https://pixabay.com/sound-effects/horror-dragon-hurt-47161/)
 
 ## Architecture Overview
 
