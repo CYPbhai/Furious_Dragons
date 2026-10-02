@@ -184,7 +184,7 @@ public class DragonController : MonoBehaviour, IDragon
         combat?.StopFlameChannel();
         state = State.Hit;
         OnGetHit?.Invoke();
-        Debug.Log("Recieved Hit");
+        // Debug.Log("Recieved Hit");
     }
 
     public void OnHitRecoveryFinished()

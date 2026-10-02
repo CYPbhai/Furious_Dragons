@@ -36,7 +36,7 @@ public class DragonSoundController : MonoBehaviour
     }
     public void PlayHurt()
     {
-        Debug.Log("Sound Hurt");
+        // Debug.Log("Sound Hurt");
         audioSource.PlayOneShot(dragonSoundsSO.hurt);
     }
     public void PlayFly()

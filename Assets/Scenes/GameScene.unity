@@ -5380,7 +5380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerVisual
   OnWinSO: {fileID: 11400000, guid: 6f8171d5039935440a1d0a510394d9f6, type: 2}
-  opposerDragonColor: 0
+  opposerDragonColor: 1
 --- !u!114 &1254340478
 MonoBehaviour:
   m_ObjectHideFlags: 0

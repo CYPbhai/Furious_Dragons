@@ -30,7 +30,7 @@ public class WinUI : MonoBehaviour
     private void UpdateUI(string winDragon)
     {
         winText.text = winDragon + " Dragon Won.";
-
+        // Debug.Log(winDragon);
     }
     private void OnDisable()
     {
